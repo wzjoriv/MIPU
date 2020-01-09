@@ -52,8 +52,9 @@ public class NFA {
 	
 	protected void transit(char symbol) {
 		
+		if(symbol == 'e') return; //if epsilon character, do not read as other type
 		int size = current.size();
-		
+			
 		for(int i = 0; i < size; i++) {
 			
 			ArrayList<String> temp; //list of available transition

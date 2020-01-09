@@ -13,7 +13,7 @@ public class MinPumpingLength {
 	private RegExpToNFA regto;
 	private LanguageStrGenerator lan;
 	
-	private final static int MAXString = 30;
+	private final static int MAXString = 30; //number of strings that are considered
 	private final static int MAXPump = 5;
 	
 	private String x = "", y = "", z = "";
@@ -47,6 +47,7 @@ public class MinPumpingLength {
     
     public int minimunP() {
     	boolean pumped = false;
+    	int minp = 0;
     	
     	String xy, nextstr = null, prevstr, xx, yy, zz;
     	
@@ -57,10 +58,10 @@ public class MinPumpingLength {
 			if ((nextstr = lan.next()) == null) {//get next minimum string; if you get a language that is finite, get a pumping length bigger than maximum string
 				this.x = this.y = this.z = "";
 				
-				int out = prevstr.length() + 1;
+				minp = prevstr.length() + 1;
 				minString = "";
 				
-				return out; 
+				return minp; 
 			}
     		
 	    	for(int p_length = 1; p_length <= nextstr.length(); p_length++) {
@@ -79,6 +80,8 @@ public class MinPumpingLength {
         			if(pump(xx, yy, zz)) {
         				if(minString == null) { //if it can be pumped and their is not a smaller string than it, make this minimum string
         					minString = nextstr;
+        					minp = prevstr.length() + 1; //prev holds the last string that didn't pump
+        					
         					this.x = xx;
         					this.y = yy;
         					this.z = zz;
@@ -101,7 +104,7 @@ public class MinPumpingLength {
     		pumped = false;
     	}
     	
-    	return minString.length();
+    	return minp;
     }
     
     public String getXYZ() {

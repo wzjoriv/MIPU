@@ -40,21 +40,21 @@ public class RegExpToNFA {
 		return nfa;
 	}
 	
-	private int[] getTransitions2(String input) { //return start and end state
+	private int[] getTransitions2(String input) { //return start and end state of constructed NFA
 		ArrayList<String> seg = new ArrayList<String>();
 		int[] startqs, endqs, involvefrom, involveto, temp;
 		
 		if(input.equals("*") || input.equals(".") || input.equals("U")) {//if just a operand for input string, return error
-			System.err.println("An operands by itself is not allowed");
+			System.err.println("An operand by itself is not allowed");
 			return new int[] {-1, -1};
-		}else if(input.length() <= 0) { //if empty string
+		}else if(input.length() <= 0) { //if empty string, no transitions needed so return just start state
 			return new int[] {0, 0};
-		}else if(input.length() == 1) { //when it is a single element return NFA
+		}else if(input.length() == 1) { //when it is a single element, return NFA with single transition
 			addTransition("q"+(currentq++)+"+" + input, "q"+(currentq++));
 			states.add("q"+(currentq-1));
 			states.add("q"+(currentq-2));
 			
-			if(!input.equals("e")) alphabet.add(input);
+			if(!input.equals("e")) alphabet.add(input); //if not epsilon, add to alphabet
 			
 			return new int[] {currentq - 2, currentq - 1};
 		}
@@ -68,6 +68,7 @@ public class RegExpToNFA {
 		involvefrom = new int[seg.size()]; //track which segments merged (used to update each segment to reflect same start, end and segments merged)
 		involveto = new int[seg.size()];
 		
+		//non-operand
 		for(int i = 0; i < seg.size(); i++) {
 			if(!seg.get(i).equals("*") && !seg.get(i).equals(".") && !seg.get(i).equals("U")) { //if it is not a operand, construct NFA
 				temp = getTransitions2(seg.get(i)); //constructs NFA
@@ -208,7 +209,7 @@ public class RegExpToNFA {
 	public static void main(String[] args) {
         
 		RegExpToNFA reg = new RegExpToNFA();
-		String input = "1*";
+		String input = "(1U0)*101(1U0)*";
 		
         NFA nfa = reg.getNFA(input); //contains the substring 101
         System.out.println(reg.parseString(input));

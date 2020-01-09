@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
@@ -25,13 +26,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class MainGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane, contentPanePump, contentPaneReg, contentPaneGen;
+	private JPanel contentPane, contentPanePump, contentPaneReg, contentPaneGen, contentPaneHelp;
 	private JTextField pump_str_input, gen_str_input, textRegExpToNFA, textInputString;
 	private JTextArea txtrHello, txtrHelloGen;
 	private MinPumpingLength pumping;
@@ -61,10 +64,10 @@ public class MainGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainGUI() {
-		ImageIcon img = new ImageIcon("src/icon.png");
+		ImageIcon img = new ImageIcon("icon.png");
 		setBackground(Color.WHITE);
 		setResizable(false);
-		setTitle("Minimun Pumping Length for Regular Expression");
+		setTitle("Regular Expression & Minimun Pumping Length");
 		setIconImage(img.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 705, 415);
@@ -82,8 +85,8 @@ public class MainGUI extends JFrame {
 		frmtdtxtfldHello.setForeground(Color.WHITE);
 		frmtdtxtfldHello.setHorizontalAlignment(SwingConstants.CENTER);
 		frmtdtxtfldHello.setEditable(false);
-		frmtdtxtfldHello.setText("Regular Language");
-		frmtdtxtfldHello.setBounds(200, 95, 298, 47);
+		frmtdtxtfldHello.setText("Regular Expression");
+		frmtdtxtfldHello.setBounds(205, 95, 298, 47);
 		contentPane.add(frmtdtxtfldHello);
 		
 		JButton btnRegularExpTo = new JButton("Regular Exp");
@@ -150,6 +153,13 @@ public class MainGUI extends JFrame {
 		JMenuItem mntmHelp = new JMenuItem("Help");
 		mntmHelp.setForeground(Color.DARK_GRAY);
 		mntmHelp.setBackground(Color.WHITE);
+		mntmHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(contentPaneHelp);
+				validate();
+				repaint();
+			}
+		});
 		menuBar.add(mntmHelp);
 		
 		/*************************************************************** Regular Expression *************************************************************/
@@ -277,7 +287,7 @@ public class MainGUI extends JFrame {
 		
 		txtrHelloGen = new JTextArea();
 		txtrHelloGen.setRows(4);
-		txtrHelloGen.setText("  Insert regular expression below");
+		txtrHelloGen.setText("  Insert regular expression below\n  for the first 10 strings that\n  are part of the language");
 		txtrHelloGen.setFont(new Font("Consolas", Font.PLAIN, 18));
 		txtrHelloGen.setTabSize(2);
 		txtrHelloGen.setForeground(Color.DARK_GRAY);
@@ -300,10 +310,10 @@ public class MainGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				nfa = regto.getNFA(gen_str_input.getText()); 
 				lan = new LanguageStrGenerator(nfa);
-				temp = "";
+				temp = "\n";
 				
 				for(int i = 0; i < 10; i++) {
-					temp += "  " + lan.next() + "\n";
+					temp += "  \"" + lan.next() + "\"\n";
 		        }
 				
 				txtrHelloGen.setText(temp);
@@ -370,9 +380,9 @@ public class MainGUI extends JFrame {
 				
 				int minPump = pumping.minimunP();	
 				txtrHello.setText(
-				  "\n\n\n\n  Input string: " + pump_str_input.getText() + "\n"
+				  "\n\n\n\n  Input string: \"" + pump_str_input.getText() + "\"\n"
 				+ "  Minimun pumping length: " + minPump + "\n"
-				+ "  Minimun string: " + pumping.getMinString()+ "\n  "
+				+ "  Minimun string: \"" + pumping.getMinString()+ "\"\n  "
 				+ pumping.getXYZ());
 			}
 		});
@@ -382,6 +392,132 @@ public class MainGUI extends JFrame {
 		btnGetMinPump.setBounds(375, 338, 145, 30);
 		btnGetMinPump.setBorder(null);
 		contentPanePump.add(btnGetMinPump);
+		
+		/****************************************************************** Help ****************************************************************/
+		
+		contentPaneHelp = new JPanel();
+		contentPaneHelp.setBackground(Color.WHITE);
+		contentPaneHelp.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPaneHelp.setLayout(null);
+		
+		JPanel panelHelp = new JPanel();
+		panelHelp.setBackground(Color.DARK_GRAY);
+		panelHelp.setBounds(0, 0, 168, 390);
+		contentPaneHelp.add(panelHelp);
+		panelHelp.setLayout(null);
+		
+		JButton btnHelp = new JButton("Back");
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(contentPane);
+				validate();
+				repaint();
+			}
+		});
+		btnHelp.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		btnHelp.setForeground(Color.WHITE);
+		btnHelp.setBackground(SystemColor.activeCaption);
+		btnHelp.setBounds(10, 33, 148, 29);
+		panelHelp.add(btnHelp);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setEditable(false);
+		textPane.setContentType("text/html");
+		textPane.setText("<style type='text/css'>\r\n" + 
+				"		body{\r\n" + 
+				"			font-family: 'Segoe UI', arial;	\r\n" + 
+				"		}\r\n" + 
+				"		h3{\r\n" + 
+				"			padding-bottom: -2px;\r\n" + 
+				"			margin-bottom: -2px;\r\n" + 
+				"		}\r\n" + 
+				"\r\n" + 
+				"		img{\r\n" + 
+				"			width: 80px;\r\n" + 
+				"		}\r\n" + 
+				"\r\n" + 
+				"		.footer{\r\n" + 
+				"			font-size: 10px;\r\n" + 
+				"		}\r\n" + 
+				"\r\n" + 
+				"		.sub_sec{\r\n" + 
+				"			margin-left: 24;\r\n" + 
+				"		}\r\n" + 
+				"\r\n" + 
+				"		.title{\r\n" + 
+				"			font-size: 18;\r\n" + 
+				"		}\r\n" + 
+				"\r\n" + 
+				"	</style>\r\n" + 
+				"<body>\r\n" + 
+				"	<h1>Help Section</h1>\r\n" + 
+				"	<hr>\r\n" + 
+				"\r\n" + 
+				"	<div class=\"overview\">\r\n" + 
+				"		<h2>Overview</h2>\r\n" + 
+				"		<div class=\"sub_sec\">\r\n" + 
+				"			<p>Hello Welcome</p>\r\n" + 
+				"		</div>\r\n" + 
+				"	</div>\r\n" + 
+				"\r\n" + 
+				"	<div class='content'>\r\n" + 
+				"		<h2>Menu</h2>\r\n" + 
+				"\r\n" + 
+				"		<div class=\"sub_sec\">\r\n" + 
+				"			<h2 class=\"title\">\r\n" + 
+				"				1. Regular Expression (Accept/Reject)\r\n" + 
+				"			</h2>\r\n" + 
+				"\r\n" + 
+				"			<div class='sub_sec'>\r\n" + 
+				"				<h3>How To use: </h3>\r\n" + 
+				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<br>\r\n" + 
+				"				<h3>Example: </h3>\r\n" + 
+				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<br>\r\n" + 
+				"			</div>\r\n" + 
+				"\r\n" + 
+				"			<h2 class=\"title\">\r\n" + 
+				"				2. Language for a given Regular Expression\r\n" + 
+				"			</h2>\r\n" + 
+				"\r\n" + 
+				"			<div class='sub_sec'>\r\n" + 
+				"				<h3>How To use: </h3>\r\n" + 
+				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<br>\r\n" + 
+				"				<h3>Example: </h3>\r\n" + 
+				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<br>\r\n" + 
+				"			</div>\r\n" + 
+				"\r\n" + 
+				"			<h2 class=\"title\">\r\n" + 
+				"				3. Minimun Pumping Length for a given Regular Expression\r\n" + 
+				"			</h2>\r\n" + 
+				"\r\n" + 
+				"			<div class='sub_sec'>\r\n" + 
+				"				<h3>How To use: </h3>\r\n" + 
+				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<br>\r\n" + 
+				"				<h3>Example: </h3>\r\n" + 
+				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<br>\r\n" + 
+				"			</div>\r\n" + 
+				"		</div>\r\n" + 
+				"\r\n" + 
+				"	</div>\r\n" + 
+				"\r\n" + 
+				"	<div class='footer'>\r\n" + 
+				"		<p>Created by: Josue N Rivera 19' 20'</p>\r\n" + 
+				"	</dir>\r\n" + 
+				"	\r\n" + 
+				"</body>");
+		textPane.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		JScrollPane jsp = new JScrollPane(textPane);
+		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		jsp.setBounds(178, 11, 505, 362);
+		
+		contentPaneHelp.add(jsp);
+
 	}
 	
 	public class RoundedBorder implements Border {
