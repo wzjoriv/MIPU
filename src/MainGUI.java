@@ -460,7 +460,7 @@ public class MainGUI extends JFrame {
 				"	<div class=\"overview\">\r\n" + 
 				"		<h2>Overview</h2>\r\n" + 
 				"		<div class=\"sub_sec\">\r\n" + 
-				"			<p>This is a program designed to explore the pumping lemma property of regular expressions. Three main functionallity are offered</p>\r\n" + 
+				"			<p>This is a program designed to explore the pumping lemma property of regular expressions. Three main functionalities are offered</p>\r\n" + 
 				"		</div>\r\n" + 
 				"	</div>\r\n" + 
 				"\r\n" + 
