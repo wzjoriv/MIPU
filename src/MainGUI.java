@@ -67,7 +67,7 @@ public class MainGUI extends JFrame {
 		ImageIcon img = new ImageIcon("icon.png");
 		setBackground(Color.WHITE);
 		setResizable(false);
-		setTitle("Regular Expression & Minimun Pumping Length");
+		setTitle("MIPU: Regular Expression & \"Mi\"nimun \"Pu\"mping Length");
 		setIconImage(img.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 705, 415);
@@ -85,7 +85,7 @@ public class MainGUI extends JFrame {
 		frmtdtxtfldHello.setForeground(Color.WHITE);
 		frmtdtxtfldHello.setHorizontalAlignment(SwingConstants.CENTER);
 		frmtdtxtfldHello.setEditable(false);
-		frmtdtxtfldHello.setText("Regular Expression");
+		frmtdtxtfldHello.setText("MIPU");
 		frmtdtxtfldHello.setBounds(205, 95, 298, 47);
 		contentPane.add(frmtdtxtfldHello);
 		
@@ -448,6 +448,10 @@ public class MainGUI extends JFrame {
 				"			font-size: 18;\r\n" + 
 				"		}\r\n" + 
 				"\r\n" + 
+				"		b{\r\n" + 
+				"			text-decoration: underline;\r\n" + 
+				"		}\r\n" + 
+				"\r\n" + 
 				"	</style>\r\n" + 
 				"<body>\r\n" + 
 				"	<h1>Help Section</h1>\r\n" + 
@@ -456,24 +460,35 @@ public class MainGUI extends JFrame {
 				"	<div class=\"overview\">\r\n" + 
 				"		<h2>Overview</h2>\r\n" + 
 				"		<div class=\"sub_sec\">\r\n" + 
-				"			<p>Hello Welcome</p>\r\n" + 
+				"			<p>This is a program designed to explore the pumping lemma property of regular languages. Three main functionallity are offered</p>\r\n" + 
 				"		</div>\r\n" + 
 				"	</div>\r\n" + 
 				"\r\n" + 
-				"	<div class='content'>\r\n" + 
+				"	<div class='menu'>\r\n" + 
 				"		<h2>Menu</h2>\r\n" + 
 				"\r\n" + 
 				"		<div class=\"sub_sec\">\r\n" + 
+				"\r\n" + 
 				"			<h2 class=\"title\">\r\n" + 
 				"				1. Regular Expression (Accept/Reject)\r\n" + 
 				"			</h2>\r\n" + 
 				"\r\n" + 
 				"			<div class='sub_sec'>\r\n" + 
+				"				<p>This option will allow you to insert an regular expression and an input string with it. It will then tell you if the input string belong to the language of the regular expression.</p>\r\n" + 
 				"				<h3>How To use: </h3>\r\n" + 
-				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<p><b>Input:</b></p>\r\n" + 
+				"				<p><i>\"Reg Exp:\"</i> Here is where you insert the regular expression</p>\r\n" + 
+				"				<p><i>\"Inp Str:\"</i> Here is where you insert the input string</p>\r\n" + 
+				"				<p><b>Output:</b></p>\r\n" + 
+				"				<p>After pressing <i>\"Does it belong to the langauge?\"</i>, the state of the box will change to either \"True\" (Green) color or \"False\" (Red). </p>\r\n" + 
+				"				<p><b>Note</b> that it will not fade or anything like it, so if the state of the previous state is still the same after you clicked the buttom, it will state the same without any animation to showcase it. For example, if the regular expression is \"10*\" and you previously tested for input string \"10\"; resulting in a state of being true. When you test for \"100\", the answer is still  betrue so the box will stay in true and it will not have an animation to showcase that a new input string is being tested.</p>\r\n" + 
 				"				<br>\r\n" + 
 				"				<h3>Example: </h3>\r\n" + 
-				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<p><b>Input:</b></p>\r\n" + 
+				"				<p><i>\"Reg Exp:\"</i> 10*</p>\r\n" + 
+				"				<p><i>\"Inp Str:\"</i> 100</p>\r\n" + 
+				"				<p><b>Output:</b></p>\r\n" + 
+				"				<p>The box will light up green and contains the word \"True\"</p>\r\n" + 
 				"				<br>\r\n" + 
 				"			</div>\r\n" + 
 				"\r\n" + 
@@ -483,10 +498,25 @@ public class MainGUI extends JFrame {
 				"\r\n" + 
 				"			<div class='sub_sec'>\r\n" + 
 				"				<h3>How To use: </h3>\r\n" + 
-				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<p><b>Input:</b></p>\r\n" + 
+				"				<p>A regular expression must be inserted in the text field below</p>\r\n" + 
+				"				<p><b>Output:</b></p>\r\n" + 
+				"				<p>After pressing <i>\"Get Strings\"</i>, the 10 smallest string the belong to the language of the regular expression will be displayed in the text box</p>\r\n" + 
 				"				<br>\r\n" + 
 				"				<h3>Example: </h3>\r\n" + 
-				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<p><b>Input:</b></p>\r\n" + 
+				"				<p>10*</p>\r\n" + 
+				"				<p><b>Output:</b></p>\r\n" + 
+				"				<p>\"1\"</p>\r\n" + 
+				"				<p>\"10\"</p>\r\n" + 
+				"				<p>\"100\"</p>\r\n" + 
+				"				<p>\"1000\"</p>\r\n" + 
+				"				<p>\"10000\"</p>\r\n" + 
+				"				<p>\"100000\"</p>\r\n" + 
+				"				<p>\"1000000\"</p>\r\n" + 
+				"				<p>\"10000000\"</p>\r\n" + 
+				"				<p>\"100000000\"</p>\r\n" + 
+				"				<p>\"1000000000\"</p>\r\n" + 
 				"				<br>\r\n" + 
 				"			</div>\r\n" + 
 				"\r\n" + 
@@ -496,14 +526,53 @@ public class MainGUI extends JFrame {
 				"\r\n" + 
 				"			<div class='sub_sec'>\r\n" + 
 				"				<h3>How To use: </h3>\r\n" + 
-				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<p><b>Input:</b></p>\r\n" + 
+				"				<p>A regular expression must be inserted in the text field below</p>\r\n" + 
+				"				<p><b>Output:</b></p>\r\n" + 
+				"				<p>After pressing <i>\"Get Min Pump\"</i>, information regarding the minimun pumping length will be outputed</p>\r\n" + 
 				"				<br>\r\n" + 
 				"				<h3>Example: </h3>\r\n" + 
-				"				<p>hehehehehebhjehhbfebkbvibkrbkbwekrbvjwtbjvbwkj</p>\r\n" + 
+				"				<p><b>Input:</b></p>\r\n" + 
+				"				<p>10*</p>\r\n" + 
+				"				<p><b>Output:</b></p>\r\n" + 
+				"				<p>Input string: \"10*\"</p>\r\n" + 
+				"				<p>Minimun pumping length: 2</p>\r\n" + 
+				"				<p>Minimun string: \"10\"</p>\r\n" + 
+				"				<p>X: 1, Y: 0, Z: e</p>\r\n" + 
 				"				<br>\r\n" + 
 				"			</div>\r\n" + 
 				"		</div>\r\n" + 
+				"	</div>\r\n" + 
 				"\r\n" + 
+				"	<div class=\"note\">\r\n" + 
+				"		<h2>Notes</h2>\r\n" + 
+				"		<div class=\"sub_sec\">\r\n" + 
+				"			<h2 class=\"title\">\r\n" + 
+				"				- Operand characters\r\n" + 
+				"			</h2>\r\n" + 
+				"			<div class='sub_sec'>\r\n" + 
+				"				<p>The characters (\".\", \"U\", \"*\", \"(\", \")\") are not allowed to be used as elements in the input string or be use as something else other than operands in the regular expression. They represent operands in the regular expression so they can only be used for that purpose.</p>\r\n" + 
+				"				<p><i>\".\":</i> Represents concatenation. There is not need to use it since the regular expression parser will assume a concatenation is being perform if their is not other operands between two elements in the regular expression</p>\r\n" + 
+				"				<p><i>\"*\":</i> Represents star operation. The elemnts to the left will used for the star operation</p>\r\n" + 
+				"				<p><i>\"U\":</i> Represents union. The elements from both sides of teh character will used for the union</p>\r\n" + 
+				"				<p><i>\"(\" or \")\":</i> Represents parenthesis. As in other mathematical expression, parathesis represent sepration and they have the highest priority when performing operation</p>\r\n" + 
+				"			</div>\r\n" + 
+				"			<h2 class=\"title\">\r\n" + 
+				"				- Tricky characters\r\n" + 
+				"			</h2>\r\n" + 
+				"			<div class='sub_sec'>\r\n" + 
+				"				<p><i>\"e\":</i> Represents epsilon. \"e\" can be used in the regular expression to represent the empthy language or it can be used in an input string to also represent nothing</p>\r\n" + 
+				"				<p><i>\" \":</i> Represents spaces. Spaces are also considered character in this program just like \"a\", \"b\", \"1\" or \"0\". Be careful with its use and the result may confused you when display</p>\r\n" + 
+				"				<p><i>\"\":</i> Represents emthy string. To insert the empthy string or the empthy language, the field can be left blank where the regular expression will go</p>\r\n" + 
+				"			</div>\r\n" + 
+				"		</div>\r\n" + 
+				"	</div>\r\n" + 
+				"\r\n" + 
+				"	<div class=\"warning\">\r\n" + 
+				"		<h2>Warning</h2>\r\n" + 
+				"		<div class=\"sub_sec\">\r\n" + 
+				"			<p>DO NOT write regular expression like \"e*\", \"()*\" or \"(0Ue)*\" since this will result in the program crashing. It will try to determine the end of the episolon transition but because their is not one, it will go into an infinite loop. Similarly, for the expression \"()*\", it will try to determine the string the belongs to nothing star. These strings are valid in teh context of regular languages either way.</p>\r\n" + 
+				"		</div>\r\n" + 
 				"	</div>\r\n" + 
 				"\r\n" + 
 				"	<div class='footer'>\r\n" + 
