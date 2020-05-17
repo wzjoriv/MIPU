@@ -84,7 +84,8 @@ public class NFA {
 		for(int i = 0; i < current.size(); i++) {
 			if((temp = transition.get(current.get(i)+ "+e")) != null)
 				for(int j = 0; j < temp.size(); j++)
-					current.add(temp.get(j));
+					if(!current.contains(temp.get(j)))
+						current.add(temp.get(j));
 		}
 		
 		current = new ArrayList<String>(new HashSet<String>(current));

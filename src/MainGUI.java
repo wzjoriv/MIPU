@@ -67,7 +67,7 @@ public class MainGUI extends JFrame {
 		ImageIcon img = new ImageIcon("icon.png");
 		setBackground(Color.WHITE);
 		setResizable(false);
-		setTitle("MIPU: Regular Expression & \"Mi\"nimun \"Pu\"mping Length");
+		setTitle("MIPU: [Mi]nimum [Pu]mping Length Educational Software");
 		setIconImage(img.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 705, 415);
@@ -89,7 +89,7 @@ public class MainGUI extends JFrame {
 		frmtdtxtfldHello.setBounds(205, 95, 298, 47);
 		contentPane.add(frmtdtxtfldHello);
 		
-		JButton btnRegularExpTo = new JButton("Regular Exp");
+		JButton btnRegularExpTo = new JButton("Membership Testing");
 		btnRegularExpTo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(contentPaneReg);
@@ -104,7 +104,7 @@ public class MainGUI extends JFrame {
 		btnRegularExpTo.setBounds(260, 199, 183, 26);
 		contentPane.add(btnRegularExpTo);
 		
-		JButton btnLanguageGenerator = new JButton("Language Generator");
+		JButton btnLanguageGenerator = new JButton("String Generation");
 		btnLanguageGenerator.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(contentPaneGen);
@@ -380,7 +380,7 @@ public class MainGUI extends JFrame {
 				
 				int minPump = pumping.minimunP();	
 				txtrHello.setText(
-				  "\n\n\n\n  Input string: \"" + pump_str_input.getText() + "\"\n"
+				  "\n\n\n\n  Reg Exp: \"" + pump_str_input.getText() + "\"\n"
 				+ "  Minimun pumping length: " + minPump + "\n"
 				+ "  Minimun string: \"" + pumping.getMinString()+ "\"\n  "
 				+ pumping.getXYZ());

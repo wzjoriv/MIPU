@@ -80,7 +80,7 @@ public class MinPumpingLength {
         			if(pump(xx, yy, zz)) {
         				if(minString == null) { //if it can be pumped and their is not a smaller string than it, make this minimum string
         					minString = nextstr;
-        					minp = prevstr.length() + 1; //prev holds the last string that didn't pump
+        					minp = minString.length();
         					
         					this.x = xx;
         					this.y = yy;

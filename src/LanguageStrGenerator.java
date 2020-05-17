@@ -6,14 +6,15 @@
  * */
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
 public class LanguageStrGenerator {
 	
 	private NFA nfa;
 	private Set<String> alphabet;
-	private Stack<String> buffer;
+	private Queue<String> buffer;
 	private int strlen = 0;
 	private int dim = 0;
 	private Set<String> blocked;
@@ -24,7 +25,7 @@ public class LanguageStrGenerator {
 		
 		this.nfa = nfa;
 		this.alphabet = nfa.alphabet;
-		buffer = new Stack<String>();
+		buffer = new LinkedList<String>();
 		blocked = new HashSet<String>();
 	}
 	
@@ -40,7 +41,7 @@ public class LanguageStrGenerator {
 			strlen++;
 		}
 		
-		return buffer.pop();
+		return buffer.poll();
 	}
 
 	public void reset() {
@@ -62,7 +63,7 @@ public class LanguageStrGenerator {
 	private void generateStrings(String string) {
 		
 		boolean value = nfa.compute(string);
-		if(nfa.getCurrent().isEmpty()) return; //stop permutation for strings that cannot possibly end in a final state (cut branch)
+		if(nfa.getCurrent().isEmpty()) return; //stop permutation for strings that cannot end in a final state (cut branch)
 		
 		
 		if(dim >= strlen) { 

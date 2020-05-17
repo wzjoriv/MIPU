@@ -7,13 +7,15 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class RegExpToNFA {
 	
-	NFA nfa;
+	private NFA nfa;
 	private Set<String> states;
 	private Set<String> alphabet;
 	private HashMap<String, ArrayList<String>> transition;
@@ -22,8 +24,24 @@ public class RegExpToNFA {
 	
 	int currentq;
 	
-	public RegExpToNFA() {
+	protected static final Map<String, String> SPECIAL_SYMBOLS;
+	
+	static {
+		 HashMap<String, String> ops = new HashMap<String, String>();
+		 ops.put("star", "*");
+		 ops.put("concat", ".");
+		 ops.put("union", "U");
+		 ops.put("empty set", "\\");
+		 ops.put("epsilon", "e");
+		 
+		 SPECIAL_SYMBOLS = Collections.unmodifiableMap(ops);
 	}
+	
+	public static Map<String, String> getSpecialSymbols() {return SPECIAL_SYMBOLS;}
+	
+	public static boolean isSpecialSymbol(String input) {return SPECIAL_SYMBOLS.containsValue(input);}
+	
+	public RegExpToNFA() {}
 	
 	public NFA getNFA(String input) {
 		transition = new HashMap<String, ArrayList<String>>();
@@ -33,7 +51,8 @@ public class RegExpToNFA {
 		
 		int[] temp = getTransitions2(input);
 		this.startq = "q" + temp[0];
-		this.endqs = new HashSet<String>(Arrays.asList("q" + temp[1])); //get transition here, return end state
+		if(input.equals(SPECIAL_SYMBOLS.get("empty set"))) this.endqs = new HashSet<String>(); //no end state if empty set
+		else this.endqs = new HashSet<String>(Arrays.asList("q" + temp[1])); //get transition here, return end state
 		
 		nfa = new NFA(states, alphabet, transition, startq, endqs);
 		
@@ -44,17 +63,20 @@ public class RegExpToNFA {
 		ArrayList<String> seg = new ArrayList<String>();
 		int[] startqs, endqs, involvefrom, involveto, temp;
 		
-		if(input.equals("*") || input.equals(".") || input.equals("U")) {//if just a operand for input string, return error
+		if(input.equals(SPECIAL_SYMBOLS.get("star")) || input.equals(SPECIAL_SYMBOLS.get("concat")) || input.equals(SPECIAL_SYMBOLS.get("union"))) {//if just a operand for input string, return error
 			System.err.println("An operand by itself is not allowed");
 			return new int[] {-1, -1};
-		}else if(input.length() <= 0) { //if empty string, no transitions needed so return just start state
+		}else if(input.equals(SPECIAL_SYMBOLS.get("empty set"))) { //Empty set doesn't have any start or end state
+			return new int[] {-1, -1};
+		}
+		else if(input.length() <= 0) { //if empty string, no transitions needed so return just start state
 			return new int[] {0, 0};
 		}else if(input.length() == 1) { //when it is a single element, return NFA with single transition
 			addTransition("q"+(currentq++)+"+" + input, "q"+(currentq++));
 			states.add("q"+(currentq-1));
 			states.add("q"+(currentq-2));
 			
-			if(!input.equals("e")) alphabet.add(input); //if not epsilon, add to alphabet
+			if(!input.equals(SPECIAL_SYMBOLS.get("epsilon"))) alphabet.add(input); //if not epsilon, add to alphabet
 			
 			return new int[] {currentq - 2, currentq - 1};
 		}
@@ -70,7 +92,7 @@ public class RegExpToNFA {
 		
 		//non-operand
 		for(int i = 0; i < seg.size(); i++) {
-			if(!seg.get(i).equals("*") && !seg.get(i).equals(".") && !seg.get(i).equals("U")) { //if it is not a operand, construct NFA
+			if(!seg.get(i).equals(SPECIAL_SYMBOLS.get("star")) && !seg.get(i).equals(".") && !seg.get(i).equals("U")) { //if it is not a operand, construct NFA
 				temp = getTransitions2(seg.get(i)); //constructs NFA
 				
 				startqs[i] = temp[0];
@@ -82,7 +104,7 @@ public class RegExpToNFA {
 		
 		//star
 		for(int i = 0; i < seg.size(); i++) {
-			if(seg.get(i).equals("*")) {
+			if(seg.get(i).equals(SPECIAL_SYMBOLS.get("star"))) {
 				startqs[i] = currentq;
 				addTransition("q"+endqs[i-1]+"+e", "q" + startqs[i-1]);
 				addTransition("q"+(currentq)+"+e", "q" + startqs[i-1]);
@@ -94,7 +116,7 @@ public class RegExpToNFA {
 				involvefrom[i] = involvefrom[i-1];
 				involveto[i] = i;
 				
-				for(int k = involvefrom[i]; k <= involveto[i]; k++) { //update value of the merge segments
+				for(int k = involvefrom[i]; k <= involveto[i]; k++) { //update value of the merged segments
 					startqs[k] = startqs[i];
 					endqs[k] = endqs[i];
 					involvefrom[k] = involvefrom[i];
@@ -172,15 +194,15 @@ public class RegExpToNFA {
 					seg.add(temp);
 					temp = "";
 					//delete != "*"
-					if(i < input.length() - 1 && (inputArray[i+1] != 'U' && inputArray[i+1] != '*')) seg.add(".");
+					if(i < input.length() - 1 && (inputArray[i+1] != 'U' && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0))) seg.add(".");
 					continue; //don't include outer parenthesis
 				}
 			}
 			
-			if(count == 0 && (inputArray[i] == 'U' || inputArray[i] == '*'|| inputArray[i] == '.')) { //add operands
+			if(count == 0 && (inputArray[i] == 'U' || inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) || inputArray[i] == '.')) { //add operands
 				seg.add(""+inputArray[i]);
 				//delete
-				if(inputArray[i] == '*' && (i + 1 < input.length() && inputArray[i+1] != 'U')) seg.add("."); //add concatenation for non-union command (aka *)
+				if(inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) && (i + 1 < input.length() && inputArray[i+1] != 'U')) seg.add("."); //add concatenation for non-union command (aka *)
 				continue;
 			}
 			
@@ -189,7 +211,7 @@ public class RegExpToNFA {
 			if(count == 0) { //string left are concatenation: add input and concatenation command
 				seg.add(temp);
 				temp = "";
-				if(i < input.length() - 1 && (inputArray[i+1] != 'U' && inputArray[i+1] != '*' && inputArray[i+1] != '.')) seg.add(".");
+				if(i < input.length() - 1 && (inputArray[i+1] != 'U' && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0) && inputArray[i+1] != '.')) seg.add(".");
 			}
 		}
 		
