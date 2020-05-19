@@ -88,7 +88,7 @@ public class NFA {
 						current.add(temp.get(j));
 		}
 		
-		current = new ArrayList<String>(new HashSet<String>(current));
+		//current = new ArrayList<String>(new HashSet<String>(current));
 	}
 	
 	public boolean isFinal() {
