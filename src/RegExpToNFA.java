@@ -194,15 +194,15 @@ public class RegExpToNFA {
 					seg.add(temp);
 					temp = "";
 					//delete != "*"
-					if(i < input.length() - 1 && (inputArray[i+1] != 'U' && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0))) seg.add(".");
+					if(i < input.length() - 1 && (inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0))) seg.add(".");
 					continue; //don't include outer parenthesis
 				}
 			}
 			
-			if(count == 0 && (inputArray[i] == 'U' || inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) || inputArray[i] == '.')) { //add operands
+			if(count == 0 && (inputArray[i] == SPECIAL_SYMBOLS.get("union").charAt(0) || inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) || inputArray[i] == SPECIAL_SYMBOLS.get("concat").charAt(0))) { //add operands
 				seg.add(""+inputArray[i]);
 				//delete
-				if(inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) && (i + 1 < input.length() && inputArray[i+1] != 'U')) seg.add("."); //add concatenation for non-union command (aka *)
+				if(inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) && (i + 1 < input.length() && inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0))) seg.add("."); //add concatenation for non-union command (aka *)
 				continue;
 			}
 			
@@ -211,7 +211,7 @@ public class RegExpToNFA {
 			if(count == 0) { //string left are concatenation: add input and concatenation command
 				seg.add(temp);
 				temp = "";
-				if(i < input.length() - 1 && (inputArray[i+1] != 'U' && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0) && inputArray[i+1] != '.')) seg.add(".");
+				if(i < input.length() - 1 && (inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("concat").charAt(0))) seg.add(".");
 			}
 		}
 		
