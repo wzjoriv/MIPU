@@ -92,7 +92,7 @@ public class RegExpToNFA {
 		
 		//non-operand
 		for(int i = 0; i < seg.size(); i++) {
-			if(!seg.get(i).equals(SPECIAL_SYMBOLS.get("star")) && !seg.get(i).equals(".") && !seg.get(i).equals("U")) { //if it is not a operand, construct NFA
+			if(!seg.get(i).equals(SPECIAL_SYMBOLS.get("star")) && !seg.get(i).equals(SPECIAL_SYMBOLS.get("concat")) && !seg.get(i).equals(SPECIAL_SYMBOLS.get("union"))) { //if it is not a operand, construct NFA
 				temp = getTransitions2(seg.get(i)); //constructs NFA
 				
 				startqs[i] = temp[0];
@@ -127,7 +127,7 @@ public class RegExpToNFA {
 
 		//concatenation
 		for(int i = 0; i < seg.size(); i++) {
-			if(seg.get(i).equals(".")) {
+			if(seg.get(i).equals(SPECIAL_SYMBOLS.get("concat"))) {
 				addTransition("q"+(endqs[i-1])+"+e", "q"+(startqs[i+1]));
 				
 				startqs[i] = startqs[i-1];
@@ -145,12 +145,12 @@ public class RegExpToNFA {
 		}
 
 		//union
-		if(seg.contains("U")) {
+		if(seg.contains(SPECIAL_SYMBOLS.get("union"))) {
 			currentq += 2;
 			states.add("q"+(currentq-1));
 			states.add("q"+(currentq-2));
 			for(int i = 0; i < seg.size(); i++) { //add transitions for all element left to the union
-				if(seg.get(i).equals("U")) {
+				if(seg.get(i).equals(SPECIAL_SYMBOLS.get("union"))) {
 					addTransition("q"+(currentq-2)+"+e", "q"+(startqs[i-1]));
 					addTransition("q"+(endqs[i-1])+"+e", "q"+(currentq-1));
 				}
@@ -193,16 +193,16 @@ public class RegExpToNFA {
 				if(count == 0) {
 					seg.add(temp);
 					temp = "";
-					//delete != "*"
-					if(i < input.length() - 1 && (inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0))) seg.add(".");
+					if(i < input.length() - 1 && (inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0))) 
+						seg.add(SPECIAL_SYMBOLS.get("concat"));
 					continue; //don't include outer parenthesis
 				}
 			}
 			
 			if(count == 0 && (inputArray[i] == SPECIAL_SYMBOLS.get("union").charAt(0) || inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) || inputArray[i] == SPECIAL_SYMBOLS.get("concat").charAt(0))) { //add operands
 				seg.add(""+inputArray[i]);
-				//delete
-				if(inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) && (i + 1 < input.length() && inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0))) seg.add("."); //add concatenation for non-union command (aka *)
+				if(inputArray[i] == SPECIAL_SYMBOLS.get("star").charAt(0) && (i + 1 < input.length() && inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0))) 
+					seg.add(SPECIAL_SYMBOLS.get("concat")); //add concatenation for non-union command (aka *)
 				continue;
 			}
 			
@@ -211,7 +211,8 @@ public class RegExpToNFA {
 			if(count == 0) { //string left are concatenation: add input and concatenation command
 				seg.add(temp);
 				temp = "";
-				if(i < input.length() - 1 && (inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("concat").charAt(0))) seg.add(".");
+				if(i < input.length() - 1 && (inputArray[i+1] != SPECIAL_SYMBOLS.get("union").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("star").charAt(0) && inputArray[i+1] != SPECIAL_SYMBOLS.get("concat").charAt(0))) 
+					seg.add(SPECIAL_SYMBOLS.get("concat"));
 			}
 		}
 		
@@ -231,11 +232,11 @@ public class RegExpToNFA {
 	public static void main(String[] args) {
         
 		RegExpToNFA reg = new RegExpToNFA();
-		String input = "(1U0)*101(1U0)*";
+		String input = "a(caUac)c*cac";
 		
         NFA nfa = reg.getNFA(input); //contains the substring 101
         System.out.println(reg.parseString(input));
         System.out.println(nfa);
-        System.out.println(nfa.compute("1"));
+        System.out.println(nfa.compute("a"));
     }
 }

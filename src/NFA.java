@@ -52,43 +52,30 @@ public class NFA {
 	
 	protected void transit(char symbol) {
 		
-		if(symbol == 'e') return; //if epsilon character, do not read as other type
+		ArrayList<String> temp; //list of available transition
+			
+		if(symbol == RegExpToNFA.SPECIAL_SYMBOLS.get("epsilon").charAt(0)) return; //if epsilon character, do not read as other type
 		int size = current.size();
 			
-		for(int i = 0; i < size; i++) {
-			
-			ArrayList<String> temp; //list of available transition
-			
+		for(int i = 0; i < size; size--) {
 			//transit non-epsilon transition    
 	        if ((temp = transition.get(current.get(i)+ "+" +symbol)) != null) {
 		        for(int j = 0; j < temp.size(); j++) {
-		        	
-		        	//update current to show all new states
-		        	if(j == 0) current.set(i, temp.get(j)); //replace old state with new state
-		        	else current.add(temp.get(j)); //add new states if multiple transitions for one state
+		        	current.add(temp.get(j)); //add new states
 		        }
-	        }else { //remove state that there is not transition for
-	        	current.remove(i);
-	        	size--; i--;
 	        }
+        	current.remove(i); //add old state
 		}
-		
-		//remove duplicates?? Not needed but can improve computation
-		//removed by converting to set then back to arrayList
-		current = new ArrayList<String>(new HashSet<String>(current));
 		
     }
 	
 	protected void updateEpsilon() {
 		ArrayList<String> temp;
-		for(int i = 0; i < current.size(); i++) {
-			if((temp = transition.get(current.get(i)+ "+e")) != null)
+		for(int i = 0; i < current.size(); i++)
+			if((temp = transition.get(current.get(i)+ "+" + RegExpToNFA.SPECIAL_SYMBOLS.get("epsilon"))) != null)
 				for(int j = 0; j < temp.size(); j++)
 					if(!current.contains(temp.get(j)))
 						current.add(temp.get(j));
-		}
-		
-		//current = new ArrayList<String>(new HashSet<String>(current));
 	}
 	
 	public boolean isFinal() {
@@ -145,9 +132,10 @@ public class NFA {
         Set<String> stat = new HashSet<String>(Arrays.asList("q0", "q1", "q2", "q3", "q4"));
         
         NFA nfa = new NFA(stat, alpha, tra, curState, finalState); //5-tuple NFA
-        
+
         System.out.println(nfa);
-        System.out.println(nfa.compute("001001"));
+        System.out.println(nfa.compute("0110000100100001"));
+        System.out.println("\nCurrent:\n\t" + nfa.getCurrent());
         
     }
 }

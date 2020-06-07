@@ -33,8 +33,8 @@ public class MinPumpingLength {
     private boolean pump(String xx, String yy, String zz) {
     	String xxx = xx, zzz = zz, out = "";
 
-    	if(xxx == "e") xxx = "";
-    	if(zzz == "e") zzz = "";
+    	if(xxx == RegExpToNFA.SPECIAL_SYMBOLS.get("epsilon")) xxx = "";
+    	if(zzz == RegExpToNFA.SPECIAL_SYMBOLS.get("epsilon")) zzz = "";
     	
     	//pump down and up
     	for(int i = 0; i < MAXPump; i++) {
@@ -68,13 +68,13 @@ public class MinPumpingLength {
     			xy = nextstr.substring(0, p_length);
     			
     			//set z to rest of the given string if empty set z to epsilon
-    			if((zz = nextstr.substring(p_length)).equals("")) zz = "e";
+    			if((zz = nextstr.substring(p_length)).equals("")) zz = RegExpToNFA.SPECIAL_SYMBOLS.get("epsilon");
     			
     			for(int ysize = p_length - 1; ysize >= 0; ysize--) {
     				yy = xy.substring(ysize);
     	    				
     				//set x to remaining of the xy string if empty set x to epsilon
-        			if((xx = xy.substring(0, ysize)).equals("")) xx = "e";
+        			if((xx = xy.substring(0, ysize)).equals("")) xx = RegExpToNFA.SPECIAL_SYMBOLS.get("epsilon");
         			
         			//if after partition string can be pump
         			if(pump(xx, yy, zz)) {
