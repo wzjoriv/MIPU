@@ -1,3 +1,6 @@
 .settings/
 bin/
 *.class
+.project
+.classpath
+workspace.code-workspace
