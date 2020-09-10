@@ -22,14 +22,14 @@ public class MinPumpingLength {
 	private String minString = "";
     
     public MinPumpingLength(String reg) { // For detection of regular expression
-    	regto = new RegExpToNFA(); //converter regular expression to NFA
+    	regto = new RegExpToNFA(); //converter of regular expression to NFA
         nfa = regto.getNFA(reg); //get NFA of given regular expression
-        lan = new LanguageStrGenerator(nfa); //get sequence of string for the language of given NFA    
+        lan = new LanguageStrGenerator(nfa); //get generator of strings for the language of given NFA    
     }
     
     public MinPumpingLength(NFA nfa) { // For detection of NFA/DFA
     	this.nfa = nfa;
-        this.lan = new LanguageStrGenerator(nfa); //get sequence of string for the language of given NFA    
+        this.lan = new LanguageStrGenerator(nfa); //get generator of strings for the language of given NFA    
     }
     
     private boolean pump(String xx, String yy, String zz) {

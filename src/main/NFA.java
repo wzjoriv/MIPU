@@ -48,8 +48,7 @@ public class NFA {
         	updateEpsilon();
         }
             
-        if (isFinal()) return true;
-        else return false;
+        return isFinal();
     }
 	
 	protected void transit(char symbol) {
@@ -66,7 +65,7 @@ public class NFA {
 		        	current.add(temp.get(j)); //add new states
 		        }
 	        }
-        	current.remove(i); //add old state
+        	current.remove(i); //remove old state
 		}
 		
     }

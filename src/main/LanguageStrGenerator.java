@@ -4,7 +4,7 @@ package main;
  * Name: Josue N Rivera
  * Date: December 2, 2019
  * 
- * Return a sequence of the set of string that belong to the language 
+ * Return a generator for the strings that belong to the language 
  * */
 
 import java.util.HashSet;

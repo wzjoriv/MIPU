@@ -151,13 +151,13 @@ public class RegExpToNFA {
 			currentq += 2;
 			states.add("q"+(currentq-1));
 			states.add("q"+(currentq-2));
-			for(int i = 0; i < seg.size(); i++) { //add transitions for all element left to the union
+			for(int i = 0; i < seg.size(); i++) { //add transitions for all groups of elements left to an union
 				if(seg.get(i).equals(SPECIAL_SYMBOLS.get("union"))) {
 					addTransition("q"+(currentq-2)+"+e", "q"+(startqs[i-1]));
 					addTransition("q"+(endqs[i-1])+"+e", "q"+(currentq-1));
 				}
 			}
-			//add transitions for the single element right to the union
+			//add transitions for the one group of elements right to an union
 			addTransition("q"+(currentq-2)+"+e", "q"+(startqs[seg.size()-1]));
 			addTransition("q"+(endqs[seg.size()-1])+"+e", "q"+(currentq-1));
 			
