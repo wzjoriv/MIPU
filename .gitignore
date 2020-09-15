@@ -4,3 +4,4 @@
 workspace.code-workspace
 .settings/
 bin/
+.metadata/
