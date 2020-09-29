@@ -1,0 +1,157 @@
+<style type='text/css'>
+		body{
+			font-family: 'Segoe UI', arial;	
+		}
+		h3{
+			padding-bottom: -2px;
+			margin-bottom: -2px;
+		}
+
+		img{
+			width: 80px;
+		}
+
+		.footer{
+			font-size: 10px;
+		}
+
+		.sub_sec{
+			margin-left: 24;
+		}
+
+		.title{
+			font-size: 18;
+		}
+
+		b{
+			text-decoration: underline;
+		}
+
+	</style>
+<body>
+	<h1>Help Section</h1>
+	<hr>
+
+	<div class="overview">
+		<h2>Overview</h2>
+		<div class="sub_sec">
+			<p>This is a program designed to explore the pumping lemma property of regular languages. Three main functionallity are offered</p>
+		</div>
+	</div>
+
+	<div class='menu'>
+		<h2>Menu</h2>
+
+		<div class="sub_sec">
+
+			<h2 class="title">
+				1. Regular Expression (Accept/Reject)
+			</h2>
+
+			<div class='sub_sec'>
+				<p>This option will allow you to insert an regular expression and an input string with it. It will then tell you if the input string belong to the language of the regular expression.</p>
+				<h3>How To use: </h3>
+				<p><b>Input:</b></p>
+				<p><i>"Reg Exp:"</i> Here is where you insert the regular expression</p>
+				<p><i>"Inp Str:"</i> Here is where you insert the input string</p>
+				<p><b>Output:</b></p>
+				<p>After pressing <i>"Does it belong to the langauge?"</i>, the state of the box will change to either "True" (Green) color or "False" (Red). </p>
+				<p><b>Note</b> that it will not fade or anything like it, so if the state of the previous state is still the same after you clicked the buttom, it will state the same without any animation to showcase it. For example, if the regular expression is "10*" and you previously tested for input string "10"; resulting in a state of being true. When you test for "100", the answer is still  betrue so the box will stay in true and it will not have an animation to showcase that a new input string is being tested.</p>
+				<br>
+				<h3>Example: </h3>
+				<p><b>Input:</b></p>
+				<p><i>"Reg Exp:"</i> 10*</p>
+				<p><i>"Inp Str:"</i> 100</p>
+				<p><b>Output:</b></p>
+				<p>The box will light up green and contains the word "True"</p>
+				<br>
+			</div>
+
+			<h2 class="title">
+				2. Language for a given Regular Expression
+			</h2>
+
+			<div class='sub_sec'>
+				<h3>How To use: </h3>
+				<p><b>Input:</b></p>
+				<p>A regular expression must be inserted in the text field below</p>
+				<p><b>Output:</b></p>
+				<p>After pressing <i>"Get Strings"</i>, the 10 smallest string the belong to the language of the regular expression will be displayed in the text box</p>
+				<br>
+				<h3>Example: </h3>
+				<p><b>Input:</b></p>
+				<p>10*</p>
+				<p><b>Output:</b></p>
+				<p>"1"</p>
+				<p>"10"</p>
+				<p>"100"</p>
+				<p>"1000"</p>
+				<p>"10000"</p>
+				<p>"100000"</p>
+				<p>"1000000"</p>
+				<p>"10000000"</p>
+				<p>"100000000"</p>
+				<p>"1000000000"</p>
+				<br>
+			</div>
+
+			<h2 class="title">
+				3. Minimun Pumping Length for a given Regular Expression
+			</h2>
+
+			<div class='sub_sec'>
+				<h3>How To use: </h3>
+				<p><b>Input:</b></p>
+				<p>A regular expression must be inserted in the text field below</p>
+				<p><b>Output:</b></p>
+				<p>After pressing <i>"Get Min Pump"</i>, information regarding the minimun pumping length will be outputed</p>
+				<br>
+				<h3>Example: </h3>
+				<p><b>Input:</b></p>
+				<p>10*</p>
+				<p><b>Output:</b></p>
+				<p>Input string: "10*"</p>
+				<p>Minimun pumping length: 2</p>
+				<p>Minimun string: "10"</p>
+				<p>X: 1, Y: 0, Z: e</p>
+				<br>
+			</div>
+		</div>
+	</div>
+
+	<div class="note">
+		<h2>Notes</h2>
+		<div class="sub_sec">
+			<h2 class="title">
+				- Operand characters
+			</h2>
+			<div class='sub_sec'>
+				<p>The characters (".", "U", "*", "(", ")") are not allowed to be used as elements in the input string or be use as something else other than operands in the regular expression. They represent operands in the regular expression so they can only be used for that purpose.</p>
+				<p><i>".":</i> Represents concatenation. There is not need to use it since the regular expression parser will assume a concatenation is being perform if their is not other operands between two elements in the regular expression</p>
+				<p><i>"*":</i> Represents star operation. The elemnts to the left will used for the star operation</p>
+				<p><i>"U":</i> Represents union. The elements from both sides of teh character will used for the union</p>
+				<p><i>"(" or ")":</i> Represents parenthesis. As in other mathematical expression, parathesis represent sepration and they have the highest priority when performing operation</p>
+			</div>
+			<h2 class="title">
+				- Tricky characters
+			</h2>
+			<div class='sub_sec'>
+				<p><i>"e":</i> Represents epsilon. "e" can be used in the regular expression to represent the empthy language or it can be used in an input string to also represent nothing</p>
+				<p><i>" ":</i> Represents spaces. Spaces are also considered character in this program just like "a", "b", "1" or "0". Be careful with its use and the result may confused you when display</p>
+				<p><i>"":</i> Represents emthy string. To insert the empthy string or the empthy language, the field can be left blank where the regular expression will go</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="warning">
+		<h2>Warning</h2>
+		<div class="sub_sec">
+			<p>DO NOT write regular expression like "e*", "()*" or "(0Ue)*" since this will result in the program crashing. It will try to determine the end of the episolon transition but because their is not one, it will go into an infinite loop. Similarly, for the expression "()*", it will try to determine the string the belongs to nothing star. These strings are valid in teh context of regular languages either way.</p>
+		</div>
+	</div>
+
+	<div class='footer'>
+		<p>Created by: Josue N Rivera 19' 20'</p>
+	</dir>
+	
+</body>
