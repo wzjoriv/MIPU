@@ -569,14 +569,6 @@ public class MainGUI extends JFrame {
 				"			</div>\r\n" + 
 				"		</div>\r\n" + 
 				"	</div>\r\n" + 
-				"\r\n" + 
-				"	<div class=\"warning\">\r\n" + 
-				"		<h2>Warning</h2>\r\n" + 
-				"		<div class=\"sub_sec\">\r\n" + 
-				"			<p>DO NOT write regular expression like \"e*\", \"()*\" or \"(0Ue)*\" since this will result in the program crashing. It will try to determine the end of the episolon transition but because their is not one, it will go into an infinite loop. Similarly, for the expression \"()*\", it will try to determine the string the belongs to nothing star. These strings are valid in teh context of regular languages either way.</p>\r\n" + 
-				"		</div>\r\n" + 
-				"	</div>\r\n" + 
-				"\r\n" + 
 				"	<div class='footer'>\r\n" + 
 				"		<p>Created by: Josue N Rivera 19' 20'</p>\r\n" + 
 				"	</dir>\r\n" + 
