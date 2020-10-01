@@ -57,7 +57,8 @@ public class MinPumpingLength {
 		
 		for(int strnum = 0; strnum < MAXString; strnum++) {
 			prevstr = nextstr;
-			if ((nextstr = lan.next()) == null) {//get next minimum string; if you get a language that is finite, get a pumping length bigger than maximum string
+			
+			if ((nextstr = lan.next()) == null) {//get next minimum string; if you get a language that is finite, get a pumping length bigger than previous string
 				this.x = this.y = this.z = "";
 				
 				minp = prevstr.length() + 1;
@@ -82,7 +83,7 @@ public class MinPumpingLength {
         			if(pump(xx, yy, zz)) {
         				if(minString == null) { //if it can be pumped and their is not a smaller string than it, make this minimum string
         					minString = nextstr;
-        					minp = minString.length();
+        					minp = prevstr.length() + 1;
         					
         					this.x = xx;
         					this.y = yy;

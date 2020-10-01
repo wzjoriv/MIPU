@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public class NFA {
 	protected Set<String> states;
 	protected Set<String> alphabet;
@@ -62,7 +63,7 @@ public class NFA {
 			//transit non-epsilon transition    
 	        if ((temp = transition.get(current.get(i)+ "+" +symbol)) != null) {
 		        for(int j = 0; j < temp.size(); j++) {
-		        	current.add(temp.get(j)); //add new states
+					current.add(temp.get(j)); //add new states
 		        }
 	        }
         	current.remove(i); //remove old state
